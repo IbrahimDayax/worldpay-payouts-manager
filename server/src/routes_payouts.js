@@ -59,15 +59,16 @@ router.post('/', requireAuth, async (req, res) => {
         }
       );
     });
-
+    
     const worldpayPayload = {
-      amount: { value: amountCents, currencyCode: currency.toUpperCase() },
-      beneficiary: {
-        name: beneficiaryName,
-        accountIdentifier: beneficiaryAccount,
-        bankName: beneficiaryBank
-      },
-      reference: reference || `PAYOUT-${payoutId}`
+      amount: amountCents,  // Send as cents (number)
+      currency: currency.toUpperCase(),
+      beneficiaryName: beneficiaryName,
+      beneficiaryAccount: beneficiaryAccount,
+      beneficiaryBank: beneficiaryBank,
+      reference: reference || `PAYOUT-${payoutId}`,
+      transactionReference: `PAY_${payoutId}_${Date.now()}`,
+      countryCode: 'GB'  // You might want to make this configurable
     };
 
     let worldpayResponse;
