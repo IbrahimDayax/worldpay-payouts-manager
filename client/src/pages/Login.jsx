@@ -4,8 +4,8 @@ import Alert from '../components/Alert'
 
 function Login({ onLogin }) {
   const [formData, setFormData] = useState({
-    email: 'admin@example.com',
-    password: 'admin123'
+    email: '',
+    password: ''
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
