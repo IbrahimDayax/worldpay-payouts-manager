@@ -8,7 +8,7 @@ export const config = {
   baseUrl: process.env.WORLDPAY_BASE_URL || 'https://try.access.worldpay.com',
   username: process.env.WORLDPAY_USERNAME || '',
   password: process.env.WORLDPAY_PASSWORD || '',
-  merchantEntity: process.env.WORLDPAY_MERCHANT_ENTITY || 'default'
+  merchantEntity: process.env.WORLDPAY_MERCHANT_ENTITY || 'BEESO'
 },
   admin: {
     email: process.env.ADMIN_EMAIL || 'admin@example.com',

@@ -7,12 +7,17 @@ function Payouts({ user }) {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [formData, setFormData] = useState({
-    amount: '100.00',
+    amount: '',
     currency: 'USD',
-    beneficiaryName: 'John Doe',
-    beneficiaryAccount: '123456789',
-    beneficiaryBank: 'Demo Bank',
-    reference: 'Test payout'
+    beneficiaryName: '',
+    beneficiaryTitle: 'mr',
+    beneficiaryAccount: '',
+    routingNumber: '',
+    accountType: 'checking',
+    beneficiaryType: 'Person',
+    beneficiaryBank: '',
+    reference: '',
+    countryCode: 'US'
   })
 
   const handleSubmit = async (e) => {
@@ -29,9 +34,14 @@ function Payouts({ user }) {
         amount: '',
         currency: 'USD',
         beneficiaryName: '',
+        beneficiaryTitle: 'mr',
         beneficiaryAccount: '',
+        routingNumber: '',
+        accountType: 'checking',
+        beneficiaryType: 'Person',
         beneficiaryBank: '',
-        reference: ''
+        reference: '',
+        countryCode: 'US'
       })
     } catch (err) {
       setError(err.error || 'Failed to create payout')
@@ -80,18 +90,29 @@ function Payouts({ user }) {
             </div>
             
             <div className="form-group">
-              <label>Reference</label>
-              <input
-                type="text"
-                name="reference"
-                value={formData.reference}
-                onChange={handleChange}
-                placeholder="Payment reference"
-              />
+              <label>Country *</label>
+              <select name="countryCode" value={formData.countryCode} onChange={handleChange} required>
+                <option value="US">US - United States</option>
+                <option value="CA">CA - Canada</option>
+                <option value="GB">GB - United Kingdom</option>
+              </select>
             </div>
           </div>
           
           <div className="grid grid-2">
+            <div className="form-group">
+              <label>Beneficiary Type *</label>
+              <select 
+                name="beneficiaryType" 
+                value={formData.beneficiaryType} 
+                onChange={handleChange}
+                required
+              >
+                <option value="Person">Person</option>
+                <option value="Company">Company</option>
+              </select>
+            </div>
+
             <div className="form-group">
               <label>Beneficiary Name *</label>
               <input
@@ -103,7 +124,29 @@ function Payouts({ user }) {
                 placeholder="Full name of recipient"
               />
             </div>
-            
+          </div>
+
+          {formData.beneficiaryType === 'Person' && (
+            <div className="form-group">
+              <label>Title *</label>
+              <select 
+                name="beneficiaryTitle" 
+                value={formData.beneficiaryTitle} 
+                onChange={handleChange}
+                required
+              >
+                <option value="mr">Mr</option>
+                <option value="mrs">Mrs</option>
+                <option value="ms">Ms</option>
+                <option value="miss">Miss</option>
+                <option value="dr">Dr</option>
+                <option value="mx">Mx</option>
+                <option value="misc">Misc</option>
+              </select>
+            </div>
+          )}
+
+          <div className="grid grid-3">
             <div className="form-group">
               <label>Account Number *</label>
               <input
@@ -112,20 +155,60 @@ function Payouts({ user }) {
                 value={formData.beneficiaryAccount}
                 onChange={handleChange}
                 required
-                placeholder="Bank account number or IBAN"
+                placeholder="Bank account number"
               />
+            </div>
+
+            <div className="form-group">
+              <label>Routing Number *</label>
+              <input
+                type="text"
+                name="routingNumber"
+                value={formData.routingNumber}
+                onChange={handleChange}
+                required
+                placeholder="9-digit routing number"
+                maxLength="9"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Account Type *</label>
+              <select 
+                name="accountType" 
+                value={formData.accountType} 
+                onChange={handleChange}
+                required
+              >
+                <option value="checking">Checking</option>
+                <option value="savings">Savings</option>
+              </select>
             </div>
           </div>
 
-          <div className="form-group">
-            <label>Bank Name</label>
-            <input
-              type="text"
-              name="beneficiaryBank"
-              value={formData.beneficiaryBank}
-              onChange={handleChange}
-              placeholder="Name of recipient's bank"
-            />
+          <div className="grid grid-2">
+            <div className="form-group">
+              <label>Bank Name</label>
+              <input
+                type="text"
+                name="beneficiaryBank"
+                value={formData.beneficiaryBank}
+                onChange={handleChange}
+                placeholder="Name of recipient's bank"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Reference (min 6 characters)</label>
+              <input
+                type="text"
+                name="reference"
+                value={formData.reference}
+                onChange={handleChange}
+                placeholder="Payment reference"
+                minLength="6"
+              />
+            </div>
           </div>
           
           <div className="form-actions">
