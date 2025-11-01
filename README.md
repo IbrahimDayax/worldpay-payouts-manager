@@ -43,11 +43,6 @@ chmod +x scripts/setup.sh
    npm run dev
    ```
 
-## 🔐 Default Credentials
-
-- Email: `admin@example.com`
-- Password: `admin123`
-
 ## 🌍 Environment Configuration
 
 ### Backend (.env)
