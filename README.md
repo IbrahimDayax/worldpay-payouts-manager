@@ -1,262 +1,277 @@
-💳 Worldpay Access Account Payouts Management System
+# 💳 Worldpay Access Account Payouts Management System
 
 A production-ready, full-stack web application for managing international payouts through Worldpay's Access API. Built with Node.js, Express, React, and SQLite.
 
-🚀 Live Demo
+🚀 **Live Application:** [https://wp-payout.paysii.com](https://wp-payout.paysii.com)
 
-The application is now live at: https://wp-payout.paysii.com
+---
 
-📋 Table of Contents
+## 📋 Table of Contents
 
-Overview
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#️-tech-stack)
+- [Architecture](#️-architecture)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Configuration](#️-configuration)
+- [API Documentation](#-api-documentation)
+- [Deployment](#-deployment)
+- [Security](#-security)
+- [License](#-license)
 
-Features
+---
 
-Tech Stack
+## 🎯 Overview
 
-Architecture
+The Worldpay Access Account Payouts Management System is a secure, enterprise-grade application that enables businesses to manage international bank transfers efficiently.
 
-Prerequisites
+### Key Capabilities
 
-Installation
+- Send international bank transfers to beneficiaries worldwide
+- Track payout status in real-time through Worldpay's API
+- Manage multiple users with role-based access control
+- View comprehensive transaction history and analytics
+- Generate detailed reports and audit trails
 
-Configuration
+---
 
-API Documentation
+## ✨ Features
 
-Deployment
+### Core Functionality
 
-Security
+- ✅ **Payout Management:** Create and track payouts to beneficiaries in multiple currencies (USD, EUR, GBP)
+- ✅ **Real-time Status Updates:** Sync payout status with Worldpay's payment network
+- ✅ **Multi-Currency Support:** Handle cross-border payments with automatic currency conversion
+- ✅ **Role-Based Access Control:** Separate permissions for Admin and Regular users
 
-License
+### Security Features
 
-🎯 Overview
+- 🔐 **JWT Authentication:** Secure token-based authentication system (8-hour expiry)
+- 🔐 **Password Encryption:** bcrypt hashing with 10 salt rounds
+- 🔐 **Rate Limiting:** Protection against brute force attacks (100 req/min)
+- 🔐 **SQL Injection Prevention:** Parameterized database queries
+- 🔐 **Security Headers:** Helmet.js implementation for HTTP security
 
-The Worldpay Access Account Payouts Management System is a secure, enterprise-grade application that enables businesses to:
+### User Interface
 
-Send international bank transfers to beneficiaries worldwide.
+- 🎨 **Modern Dashboard:** Clean interface with real-time statistics
+- 🎨 **Responsive Design:** Mobile-friendly layout
+- 🎨 **Advanced Filtering:** Search and filter payouts by status, date, or beneficiary
 
-Track payout status in real-time through Worldpay's API.
+---
 
-Manage multiple users with role-based access control.
+## 🛠️ Tech Stack
 
-View comprehensive transaction history and analytics.
+| Layer | Technologies |
+|-------|--------------|
+| **Backend** | Node.js 18+, Express.js 4.19, SQLite 3.x |
+| **Frontend** | React 18.3, Vite 5.4, Axios, Custom CSS |
+| **Auth & Security** | JWT, bcrypt, Helmet, CORS, Express Rate Limit |
+| **Infrastructure** | Nginx (Reverse Proxy), PM2 (Process Manager), Ubuntu 24.04 |
+| **External API** | Worldpay Access API (v2025-01-01) |
 
-✨ Features
+---
 
-Core Functionality
+## 🏗️ Architecture
 
-✅ Payout Management: Create and track payouts to beneficiaries in multiple currencies (USD, EUR, GBP).
+The application follows a standard 3-tier architecture, utilizing a RESTful API to communicate between the React frontend and the Express backend.
 
-✅ Real-time Status Updates: Sync payout status with Worldpay's payment network.
+### Request Flow
 
-✅ Multi-Currency Support: Handle cross-border payments with automatic currency conversion.
+1. **User Action:** User initiates a payout via the React Dashboard
+2. **API Call:** Frontend sends a secured POST request to the Express API
+3. **Validation:** Backend validates the token and payload
+4. **External Processing:** Backend communicates with Worldpay Access API
+5. **Persistence:** Transaction details are stored in SQLite
+6. **Response:** Status is returned to the user
 
-✅ Role-Based Access Control: Separate permissions for Admin and Standard users.
+---
 
-Security
+## 📦 Prerequisites
 
-🔐 JWT Authentication: Secure token-based authentication system (8-hour expiry).
+Before installation, ensure you have:
 
-🔐 Password Encryption: bcrypt hashing with 10 salt rounds.
+- **Node.js:** Version 18.x or higher
+- **Git:** For cloning the repository
+- **Worldpay Access Account:**
+  - Username & Password
+  - Merchant Entity ID
 
-🔐 Rate Limiting: Protection against brute force attacks (100 req/min).
+---
 
-🔐 Input Validation: Parameterized database queries to prevent SQL injection.
+## 🚀 Installation
 
-User Interface
+### Local Development Setup
 
-🎨 Modern Dashboard: Clean interface with real-time statistics.
+#### 1. Clone the Repository
 
-🎨 Responsive Design: Mobile-friendly layout.
-
-🎨 Advanced Filtering: Search payouts by status, date, or beneficiary.
-
-🛠️ Tech Stack
-
-Backend
-
-Runtime: Node.js 18+
-
-Framework: Express.js 4.19
-
-Database: SQLite 3.x (Easy migration to PostgreSQL)
-
-Security: Helmet, CORS, Express Rate Limit
-
-Frontend
-
-Framework: React 18.3
-
-Build Tool: Vite 5.4
-
-Styling: Custom CSS / Tailwind-ready
-
-Infrastructure
-
-Web Server: Nginx (Reverse proxy & SSL)
-
-Process Manager: PM2
-
-OS: Ubuntu 24.04 LTS
-
-🏗️ Architecture
-
-Request Flow:
-Browser → Nginx → Express → Auth Middleware → Controller → Service → Worldpay API / Database
-
-graph LR
-    A[Client Browser] -->|HTTPS| B[Nginx Reverse Proxy]
-    B -->|Proxy Pass| C[Express Backend :4000]
-    C -->|Queries| D[(SQLite Database)]
-    C -->|External API| E[Worldpay Access API]
-
-
-📦 Prerequisites
-
-Node.js: v18.x or higher
-
-Worldpay Access Account:
-
-Username & Password
-
-Merchant Entity ID
-
-🚀 Installation
-
-1. Clone the Repository
-
-git clone [https://github.com/yourusername/worldpay-payouts.git](https://github.com/yourusername/worldpay-payouts.git)
+```bash
+git clone https://github.com/yourusername/worldpay-payouts.git
 cd worldpay-payouts
+```
 
+#### 2. Backend Setup
 
-2. Backend Setup
-
+```bash
 cd server
 npm install
 cp .env.example .env
-# Edit .env with your credentials
-npm run seed  # Initialize DB and Admin user
+# Edit .env with your credentials (see Configuration section)
+npm run seed  # Initializes DB and creates Admin user
 npm run dev
+```
 
+#### 3. Frontend Setup
 
-3. Frontend Setup
-
+```bash
 cd ../client
 npm install
 npm run dev
+```
 
+#### 4. Access
 
-Default Admin Credentials
+Open [http://localhost:5173](http://localhost:5173)
 
-Email: admin@yourdomain.com
+**Default credentials:**
+- Email: `admin@yourdomain.com`
+- Password: *(As defined in your .env)*
 
-Password: (Set in your .env file)
+---
 
-⚙️ Configuration
+## ⚙️ Configuration
 
-Create a .env file in the server directory:
+Create a `.env` file in the `server` directory with the following variables:
 
+```env
 # Server
 PORT=4000
 NODE_ENV=development
-JWT_SECRET=change_this_to_a_secure_random_string
-FRONTEND_URL=http://localhost:5173
+JWT_SECRET=CHANGE_THIS_TO_A_SECURE_STRING
 
 # Database
 DB_FILE=./data/app.db
 
-# Admin Setup
-ADMIN_EMAIL=admin@yourdomain.com
-ADMIN_PASSWORD=secure_password_here
+# Initial Admin Setup
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=secure_password
 ADMIN_NAME=Super Admin
 
 # Worldpay API
-WORLDPAY_BASE_URL=[https://try.access.worldpay.com](https://try.access.worldpay.com)
+WORLDPAY_BASE_URL=https://try.access.worldpay.com
 WORLDPAY_USERNAME=your_username
 WORLDPAY_PASSWORD=your_password
 WORLDPAY_MERCHANT_ENTITY=your_entity_id
 
+# Frontend
+FRONTEND_URL=http://localhost:5173
+```
 
-🔌 API Documentation
+> **Note:** For production, change `WORLDPAY_BASE_URL` to `https://access.worldpay.com`
 
-Auth
+---
 
-POST /api/auth/login: Authenticate user and receive JWT.
+## 🔌 API Documentation
 
-GET /api/auth/me: Get current user details.
+### Authentication
 
-Payouts
+#### Login
+```http
+POST /api/auth/login
+```
 
-POST /api/payouts: Create a new payout.
-
-GET /api/payouts: List all payouts.
-
-POST /api/payouts/:id/refresh: Force sync status with Worldpay.
-
-Users (Admin)
-
-GET /api/users: List all users.
-
-POST /api/users: Create a new user.
-
-DELETE /api/users/:id: Delete a user.
-
-🌐 Deployment
-
-This application is optimized for deployment on Linux (Ubuntu) using Nginx and PM2.
-
-1. Build Frontend
-
-cd client
-npm run build
-
-
-2. Configure PM2 (Backend)
-
-cd server
-pm2 start src/index.js --name "worldpay-backend"
-pm2 save
-
-
-3. Configure Nginx
-
-Use the following block in your Nginx config (/etc/nginx/sites-available/default) to proxy requests and serve the React build.
-
-server {
-    listen 80;
-    server_name wp-payout.paysii.com;
-
-    root /var/www/worldpay-payouts/client/dist;
-    index index.html;
-
-    # Frontend
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Backend API
-    location /api/ {
-        proxy_pass http://localhost:4000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
+**Request Body:**
+```json
+{
+  "email": "admin@example.com",
+  "password": "password"
 }
+```
 
+### Payouts
 
-🔒 Security
+#### Create Payout
+```http
+POST /api/payouts
+```
 
-HTTPS: Always use SSL/TLS (Let's Encrypt recommended) in production.
+**Headers:**
+```
+Authorization: Bearer <token>
+```
 
-Environment Variables: Never commit .env files to version control.
+**Request Body:**
+```json
+{
+  "amount": "199.99",
+  "currency": "USD",
+  "beneficiaryName": "John Smith",
+  "beneficiaryAccount": "123456789",
+  "countryCode": "US"
+}
+```
 
-Rate Limiting: Configured to prevent abuse.
+#### Get History
+```http
+GET /api/payouts
+```
 
-Headers: Helmet.js is used to set secure HTTP headers.
+#### Refresh Status
+```http
+POST /api/payouts/:id/refresh
+```
 
-📄 License
+---
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 🌐 Deployment
+
+### Production Deployment (Linux/Nginx)
+
+1. **Prepare Server:** Install Node.js 18, Nginx, and PM2
+
+2. **Build Frontend:**
+   ```bash
+   cd client && npm run build
+   ```
+
+3. **Configure Backend:** Ensure `NODE_ENV=production` and update database paths
+
+4. **Start with PM2:**
+   ```bash
+   pm2 start ./server/src/index.js --name "worldpay-backend"
+   ```
+
+5. **Nginx Configuration:** Set up Nginx as a reverse proxy to serve the static frontend files and proxy `/api` requests to `localhost:4000`
+
+---
+
+## 🔒 Security
+
+This application implements several security layers suitable for financial applications:
+
+- **Data Protection:** No plain-text passwords stored
+- **API Security:** Rate limiting prevents abuse; CORS restricts access to trusted domains
+- **Infrastructure:** Run behind Nginx with SSL (HTTPS) enabled
+- **Maintenance:** Regularly rotate `JWT_SECRET` and API credentials
+
+---
+
+## 📄 License
+
+Copyright © 2025 Ibrahim Dayax. All rights reserved.
+
+This software and its source code are the property of Ibrahim Dayax. No part of this repository may be reproduced, distributed, or modified without explicit written permission from the author.
+
+---
+
+## 📞 Support
+
+For support, please contact the development team or open an issue on the repository.
+
+- **Live App:** [https://wp-payout.paysii.com](https://wp-payout.paysii.com)
+- **Documentation:** [Worldpay Access API](https://developer.worldpay.com/docs/access-worldpay)
+
+---
+
+**Next Step:** Would you like me to generate a specific Nginx configuration file optimized for this React/Express structure?
